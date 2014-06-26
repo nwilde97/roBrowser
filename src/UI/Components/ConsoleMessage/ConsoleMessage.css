@@ -1,0 +1,14 @@
+.msg {
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.error{
+	color: #f00;
+}
+.system{
+	color: #0f0;
+}
+
+.thread {
+	color: #ccc;
+}

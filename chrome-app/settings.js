@@ -4,21 +4,20 @@ var ROConfig = {
 	development: true, // don't need to compile javascript files in chrome app since it's already a package.
 	remoteClient : "http://grf.robrowser.com/",
 	servers : [ {
-		display : "Demo Server",
-		desc : "roBrowser's demo server",
-		address : "5.135.190.4",
-		port : 7000,
+		display : "Test Server",
+		desc : "Ned's Server",
+		address : "pes-jira.nike.com",
+		port : 6900,
 		version : 25,
 		langtype : 12,
 		packetver : 20131223,
-		packetKeys : true,
-		socketProxy : "ws://5.135.190.4:443/",
+		packetKeys : false,
 		adminList : [ 2000000 ]
 	} ],
 	saveFiles : true,
 	skipServerList : true,
 	version : 1.266,
-	autoLogin: ['nwild1', 'xxx'],
+	autoLogin: ['nwilde97', 'apfles55'],
 	character: 0,
 	skipIntro: true,
 	preferences: [

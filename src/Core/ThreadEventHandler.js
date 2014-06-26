@@ -58,8 +58,8 @@ function(      FileManager,        FileSystem,           MapLoader )
 				if (msg.data.substr(-1) !== '/') {
 					msg.data += '/';
 				}
-
 				FileManager.remoteClient = msg.data;
+				sendLog("Setting host to "+msg.data);
 				break;
 
 
@@ -100,6 +100,7 @@ function(      FileManager,        FileSystem,           MapLoader )
 
 			// Get a file from client/grf
 			case 'GET_FILE':
+				sendLog("Fetching a file "+msg.data.filename);
 				FileManager.get( msg.data.filename, function( result, error){
 					if (error) {
 						sendError( '[Thread] ' + error + ' ('+ msg.data.filename +')' );
@@ -117,6 +118,7 @@ function(      FileManager,        FileSystem,           MapLoader )
 
 			// Get and load a file from client/grf
 			case 'LOAD_FILE':
+				sendLog("Loading a file "+msg.data.filename);
 				FileManager.load( msg.data.filename, function( result, error){
 					if (error) {
 						sendError( '[Thread] ' + error + ' ('+ msg.data.filename +')' );
@@ -145,6 +147,7 @@ function(      FileManager,        FileSystem,           MapLoader )
 
 			// Start loading a map
 			case 'LOAD_MAP':
+				sendLog("Loading map "+msg.data);
 				var map = new MapLoader();
 
 				map.onprogress = function(progress){

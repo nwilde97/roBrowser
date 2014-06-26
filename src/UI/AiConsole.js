@@ -10,6 +10,7 @@
 define(function(require){
 
 	var Preferences = require("Core/Preferences");
+	var ConsoleMessage = require("UI/Components/ConsoleMessage/ConsoleMessage");
 	
 	var Level = {
 		DEBUG: 4,
@@ -22,26 +23,27 @@ define(function(require){
 	var _prefs = Preferences.get("Logging", {level: Level.DEBUG}, 1.0);
 
 	
-	function log(msg, level){
+	function log(msg, level, type){
 		if(_prefs.level > level){
 			console.log(msg);
+			ConsoleMessage.log(msg, type);
 		}
 	}
 	
-	function debug(msg){
-		log(msg, Level.DEBUG);
+	function debug(msg, type){
+		log(msg, Level.DEBUG, type);
 	}
 	
-	function info(msg){
-		log(msg, Level.INFO);
+	function info(msg, type){
+		log(msg, Level.INFO, type);
 	}
 	
-	function warn(msg){
-		log(msg, Level.WARN);
+	function warn(msg, type){
+		log(msg, Level.WARN, type);
 	}
 	
-	function error(msg){
-		log(msg, Level.ERROR);
+	function error(msg, type){
+		log(msg, Level.ERROR, type);
 	}
 	
 	return {

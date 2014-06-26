@@ -4,6 +4,8 @@ define(function(require) {
 	var PACKET = require('Network/PacketStructure');
 	var AiConsole = require('UI/AiConsole');
 	var Session = require('Engine/SessionStorage');
+	var Thread = require('Core/Thread');
+	var DB = require('DB/DBManager');
 
 	var _isInitialised = false;
 
@@ -19,7 +21,7 @@ define(function(require) {
 	 */
 	function init(ip, port, mapName) {
 		var _mapName = mapName;
-
+		
 		// Connect to char server
 		Network.connect(Network.utils.longToIP(ip), port, function(success) {
 
@@ -64,7 +66,31 @@ define(function(require) {
 		}
 
 		_isInitialised = true;
+		
+		Network.hookPacket( PACKET.ZC.NPCACK_MAPMOVE, onMapChange );
 
+	}
+	
+	function onMapChange(pkt){
+		var filename = pkt.mapName.replace(/\.gat$/i, '.rsw');
+		if (filename in DB.mapalias) {
+			filename = DB.mapalias[filename];
+		}
+		AiConsole.info("Current field "+filename, "system");
+		Thread.hook('MAP_GROUND',  onMapLoaded );
+
+		Thread.send('LOAD_MAP', filename, onMapComplete );
+	}
+	
+	function onMapComplete(success, error){
+		if (!success) {
+			AiConsole.info("Problem loading map data", "error");
+			AiConsole.info(error, "error");
+		}
+	}
+	
+	function onMapLoaded(data){
+		AiConsole.info("Map data loaded", "system");
 	}
 
 	return {
